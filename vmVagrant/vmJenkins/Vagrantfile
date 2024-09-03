@@ -1,0 +1,135 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://vagrantcloud.com/search.
+  config.vm.box = "spox/ubuntu-arm"
+
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `vagrant box outdated`. This is not recommended.
+  # config.vm.box_check_update = false
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # NOTE: This will enable public access to the opened port
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine and only allow access
+  # via 127.0.0.1 to disable public access
+  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Disable the default share of the current code directory. Doing this
+  # provides improved isolation between the vagrant box and your host
+  # by making sure your Vagrantfile isn't accessible to the vagrant box.
+  # If you use this you may want to enable additional shared subfolders as
+  # shown above.
+  # config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+   config.vm.provider "vmware_desktop" do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+     vb.gui = true
+  #
+  #   # Customize the amount of memory on the VM:
+     vb.memory = "1024"
+   end
+  #
+  # View the documentation for the provider you are using for more
+  # information on available options.
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+   config.vm.provision "shell", inline: <<-SHELL
+   sudo echo "-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+=sdsH
+-----END PGP PUBLIC KEY BLOCK-----
+" > /usr/share/keyrings/jenkins-keyring.asc
+	echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]"  https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+        sudo apt-get update
+	sudo apt install fontconfig openjdk-17-jre -y
+        sudo apt-get install -y jenkins
+        sudo systemctl enable jenkins
+        sudo systemctl start jenkins
+	sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+   SHELL
+end
