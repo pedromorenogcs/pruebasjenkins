@@ -1,7 +1,7 @@
 ---
 - hosts: webserver
   become: yes
-  remote_user: ansible
+  remote_user: vagrant
   tasks:
     - name: install apache2
       apt:
