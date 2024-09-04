@@ -7,7 +7,7 @@
   tasks:
    - name: Copy file with owner and permissions
      ansible.builtin.copy:
-       src: /var/lib/jenkins/workspace/pj1git/web/000-default.conf
+       src: "{{ workspace }}/web/000-default.conf"
        dest: /etc/apache2/sites-available/
        owner: root
        group: root
