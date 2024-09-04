@@ -2,8 +2,8 @@
     header("refresh: 3;");
 ?>
 <html>
-<body bgColor=yellow>
-<h1>Entraaaa</h1>
+<body bgColor=pink>
+<h1>Hola</h1>
 <?php
 echo 'UNAME: ' . php_uname() . '<br/>';
 echo 'HOSTNAME: ' . gethostname() .  '<br/>';
