@@ -9,7 +9,7 @@ pipeline {
         }
          stage('Ansible') {
              steps {
-                  ansiblePlaybook inventory: 'ansible/inventory.ini' playbook: 'ansible/cpConfig.yaml'
+                  ansiblePlaybook inventory: 'ansible/inventory.ini', playbook: 'ansible/cpConfig.yaml'
             }
         }
         
