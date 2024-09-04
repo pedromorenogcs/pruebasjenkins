@@ -1,5 +1,7 @@
 ---
 - hosts: webserver
+  vars_files:
+    - "{{ lookup('ansible.builtin.env', 'WORKSPACE') }}/ansible/external_vars.yaml"
   become: yes
   remote_user: vagrant
   tasks:
@@ -13,7 +15,7 @@
 
    - name: Copy file with owner and permissions
      ansible.builtin.copy:
-       src: /var/lib/jenkins/workspace/pj1git/web/index.html
+       src: {{ workspace }}/web/index.html
        dest: /var/www/html/
        owner: root
        group: root
