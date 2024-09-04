@@ -2,7 +2,7 @@
     header("refresh: 3;");
 ?>
 <html>
-<body bgColor=blue>
+<body bgColor=yellow>
 <h1>Entraaaa</h1>
 <?php
 echo 'UNAME: ' . php_uname() . '<br/>';
