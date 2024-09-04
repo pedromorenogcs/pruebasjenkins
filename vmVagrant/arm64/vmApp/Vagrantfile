@@ -72,5 +72,7 @@ Vagrant.configure("2") do |config|
   # documentation for more information about their specific syntax and use.
 #   config.vm.provision "shell", inline: <<-SHELL
 #sudo -u vagrant echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCpLBJPIyf3/JAojsSR+YThXxZ0nowHlIo7YHHKqBnR1B/zbOPf9j4GteJubqM69BS8HK9wOL0G8ABzfoEuuFWtSPDh5MhaY21/w40m6+EHy5uaMzZAwCqaBhC53jyaeRQ0jemjVwkRVpz3nPPGTWkU+bAKNYaVCW148OogWFKVOPRk9KBResP97yZ9D/pEwuowBD8Rdalqz9ST36ABu1LtpVFmBGc4CE1tr2XWO/Shna82sMTRyZGNbV/u2yJPITHl2eRHYHDuI+hLEgFLOmO4NiVAVcycmMRcCOccUvvfbhcpGsqyzb/k1u9vXZ86O0K/H+IkpbDfpaOg5iDzIY9134yFOAKVFkGlOb20pwvEIn5DfxU80ooeM0n6nu3qOFmZ7GWNp9CHVJ4VmNmgGoXTg66ApDfqUNkevAQVGvaD+22u3ElMiyMIYnQTettgiSuyuVNwwP5BEn0Khs4fLT+T/AU9KZbKT0hR3BMUSvBWKUzyL977akbFqk0vwwRTM+k= jenkins@vagrant" > /home/vagrant/.ssh/authorized_keys
+sudo apt-get install -y php
+sudo apt-get install -y libapache2-mod-php
 #   SHELL
 end
