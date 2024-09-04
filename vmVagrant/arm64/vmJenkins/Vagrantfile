@@ -132,5 +132,8 @@ MetBbjkOnNXyWrP3SAPwqQMMg/vNa+mJIjoNByw=
         sudo systemctl start jenkins
 	sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 	sudo apt install -y ansible
+	sudo -u jenkins ssh-keygen -q -t rsa -N '' -f /var/lib/jenkins/.ssh/id_rsa <<<y >/dev/null 2>&1
+	sudo cat /var/lib/jenkins/.ssh/id_rsa.pub
+	sudo echo "JenkinsPass:";cat /var/lib/jenkins/secrets/initialAdminPassword
    SHELL
 end
