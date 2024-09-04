@@ -15,7 +15,7 @@
 
    - name: Copy file with owner and permissions
      ansible.builtin.copy:
-       src: {{ workspace }}/web/index.html
+       src: "{{ workspace }}/web/index.html"
        dest: /var/www/html/
        owner: root
        group: root
