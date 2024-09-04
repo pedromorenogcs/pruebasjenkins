@@ -1,4 +1,5 @@
 <html>
+<meta http-equiv="refresh" content="5" />
 <body bgColor=red>
 <h1>Entraaaa</h1>
 <?php
