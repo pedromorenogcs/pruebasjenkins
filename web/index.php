@@ -1,6 +1,6 @@
 <html>
 <meta http-equiv="refresh" content="5" />
-<body bgColor=red>
+<body bgColor=blue>
 <h1>Entraaaa</h1>
 <?php
 echo 'UNAME: ' . php_uname() . '<br/>';
