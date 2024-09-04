@@ -1,5 +1,5 @@
 <html>
-<body bgColor=green>
+<body bgColor=red>
 <h1>Entraaaa</h1>
 <?php
 echo 'UNAME: ' . php_uname() . '<br/>';
