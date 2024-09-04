@@ -1,0 +1,17 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch:'main'url: 'https://github.com/pedromorenogcs/pruebasjenkins.git'
+            }
+        }
+         stage('Ansible') {
+             steps {
+                  ansiblePlaybook inventory: 'ansible/inventory.ini' playbook: 'ansible/cpConfig.yaml'
+            }
+        }
+        
+    }
+}
