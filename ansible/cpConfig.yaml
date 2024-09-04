@@ -5,6 +5,12 @@
   become: yes
   remote_user: vagrant
   tasks:
+
+   - name: Basic usage
+     ansible.builtin.debug:
+       msg: "'{{ workspace }}' WORKSPACE env "
+
+
    - name: Copy file with owner and permissions
      ansible.builtin.copy:
        src: "{{ workspace }}/web/000-default.conf"
