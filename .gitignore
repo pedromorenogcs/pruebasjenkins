@@ -1,2 +1,4 @@
 vmVagrant/arm64/vmApp/.vagrant/
 vmVagrant/arm64/vmJenkins/.vagrant/
+vmVagrant/x86_64/vmApp/.vagrant/
+vmVagrant/x86_64/vmJenkins/.vagrant/
