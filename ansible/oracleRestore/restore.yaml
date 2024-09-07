@@ -18,7 +18,7 @@
       mode: '0755'
 
   - name: Copy scripts to the remote host
-    copy:
+    template: >:
       src: "{{ WORKSPACE }}/database/scripts/"
       dest: "{{ dest_path }}"
       mode: '0700'
