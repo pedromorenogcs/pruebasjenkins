@@ -19,7 +19,7 @@
 
   - name: Copy scripts to the remote host
     template: 
-      src: "{{ WORKSPACE }}/database/scripts/"
+      src: "{{ WORKSPACE }}/database/scripts/restoreDB.sh"
       dest: "{{ dest_path }}"
       mode: '0700'
 
