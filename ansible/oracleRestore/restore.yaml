@@ -9,7 +9,7 @@
 
   - name: Basic usage
     ansible.builtin.debug:
-      msg: "'{{ workspace }}' WORKSPACE env "
+      msg: "'{{ WORKSPACE }}' WORKSPACE env "
 
   - name: Create a directory if it does not exist
     file:
@@ -21,7 +21,7 @@
 
   - name: Copy scripts to the remote host
     copy:
-      src: "{{ workspace }}/database/scripts/"
+      src: "{{ WORKSPACE }}/database/scripts/"
       dest: "{{ dest_path }}"
       owner: oracle
       group: oinstall
