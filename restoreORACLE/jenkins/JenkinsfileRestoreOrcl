@@ -13,10 +13,10 @@ pipeline {
         }
          stage('Ansible') {
              steps {
-                  ansiblePlaybook 
+                  ansiblePlaybook (
                      inventory: 'restoreORACLE/ansible/inventory.ini', 
                      playbook: 'restoreORACLE/ansible/restore.yaml', 
-                     extras:"-e WORKSPACE=${WORKSPACE} -e ORACLESID=$params.ORACLESID"
+                     extras:"-e WORKSPACE=${WORKSPACE} -e ORACLESID=$params.ORACLESID")
             }
         }
         
