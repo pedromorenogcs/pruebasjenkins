@@ -1,0 +1,31 @@
+---
+- name: Test restore oracle database.
+  hosts: 192.168.33.11
+  vars_files:
+    - "{{ lookup('ansible.builtin.env', 'WORKSPACE') }}ansible/oracleRestore/external_vars.yaml"
+  remote_user: oracle
+
+  tasks:
+
+  - name: Basic usage
+    ansible.builtin.debug:
+      msg: "'{{ workspace }}' WORKSPACE env "
+
+  - name: Create a directory if it does not exist
+    file:
+      path: "{{ remote_path }}"
+      state: directory
+      mode: '0755'
+      owner: oracle
+      group: oinstall
+
+  - name: Copy scripts to the remote host
+    copy:
+      src: "{{ workspace }}/database/scripts/"
+      dest: "{{ dest_path }}"
+      owner: oracle
+      group: oinstall
+      mode: '0700'
+
+  - name: run
+    shell: /home/oracle/restore_scripts/restoreDB.sh
