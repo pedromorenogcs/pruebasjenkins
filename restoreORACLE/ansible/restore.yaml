@@ -2,7 +2,7 @@
 - name: Test restore oracle database.
   hosts: oracleservers
   vars_files:
-    - "{{ WORKSPACE }}/ansible/oracleRestore/external_vars.yaml"
+    - "{{ WORKSPACE }}/restoreORACLE/ansible/external_vars.yaml
   remote_user: vagrant
 
   tasks:
@@ -19,8 +19,8 @@
 
   - name: Copy scripts to the remote host
     template: 
-      src: "{{ WORKSPACE }}/database/scripts/restoreDB.sh"
-      dest: "{{ dest_path }}"
+      src: "{{ WORKSPACE }}/restoreORACLE/database/scripts/restoreDB.sh"
+      dest: "{{ remote_path }}"
       mode: '0700'
 
   - name: run
