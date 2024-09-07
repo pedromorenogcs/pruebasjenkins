@@ -1,0 +1,3 @@
+remote_path: /home/oracle/restore_scripts
+workspace: "{{ lookup('ansible.builtin.env', 'WORKSPACE') }}"
+dest_path: /home/oracle/restore_scripts
