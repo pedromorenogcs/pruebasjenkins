@@ -3,7 +3,7 @@
   hosts: oracleservers
   vars_files:
     - "{{ WORKSPACE }}ansible/oracleRestore/external_vars.yaml"
-  remote_user: oracle
+  remote_user: vagrant
 
   tasks:
 
