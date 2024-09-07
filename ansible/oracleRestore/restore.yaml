@@ -21,8 +21,6 @@
     copy:
       src: "{{ WORKSPACE }}/database/scripts/"
       dest: "{{ dest_path }}"
-      owner: oracle
-      group: oinstall
       mode: '0700'
 
   - name: run
