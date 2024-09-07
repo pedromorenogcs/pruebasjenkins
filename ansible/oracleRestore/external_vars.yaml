@@ -1,2 +1,3 @@
 remote_path: /home/vagrant/restore_scripts
 dest_path: /home/vagrant/restore_scripts
+oracle_sid: {{ ORACLESID }}

@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: "ORACLESID", defaultValue: "ORCL", trim: true, description: "ORACLE DATABASE SID")
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -9,7 +13,7 @@ pipeline {
         }
          stage('Ansible') {
              steps {
-                  ansiblePlaybook inventory: 'ansible/oracleRestore/inventory.ini', playbook: 'ansible/oracleRestore/restore.yaml', extras:"-e WORKSPACE=${WORKSPACE}"
+                  ansiblePlaybook inventory: 'ansible/oracleRestore/inventory.ini', playbook: 'ansible/oracleRestore/restore.yaml', extras:"-e WORKSPACE=${WORKSPACE -e ORACLESID=$params.ORACLESID}"
             }
         }
         
