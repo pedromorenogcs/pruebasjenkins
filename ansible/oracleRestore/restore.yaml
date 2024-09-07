@@ -1,6 +1,6 @@
 ---
 - name: Test restore oracle database.
-  hosts: 192.168.33.11
+  hosts: oracleservers
   vars_files:
     - "{{ lookup('ansible.builtin.env', 'WORKSPACE') }}ansible/oracleRestore/external_vars.yaml"
   remote_user: oracle
