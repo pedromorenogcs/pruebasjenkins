@@ -2,7 +2,7 @@
 - name: Test restore oracle database.
   hosts: oracleservers
   vars_files:
-    - "{{ WORKSPACE }}/restoreORACLE/ansible/external_vars.yaml
+    - "{{ WORKSPACE }}/restoreORACLE/ansible/external_vars.yaml"
   remote_user: vagrant
 
   tasks:
