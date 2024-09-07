@@ -24,6 +24,5 @@
       mode: '0700'
 
   - name: run
-    #shell: "{{ remote_path }}/restoreDB.sh"
-    script: "{{ remote_path }}/restoreDB.sh"
+    shell: "{{ remote_path }}/restoreDB.sh"
     register: out
