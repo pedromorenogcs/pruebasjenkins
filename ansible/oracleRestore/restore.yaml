@@ -25,8 +25,8 @@
 
   - name: run
     shell: "{{ remote_path }}/restoreDB.sh"
-    register: out
+    register: stdout_lines
 
   - debug: 
-     var: out.stdout
+     var: stdout_lines
 
