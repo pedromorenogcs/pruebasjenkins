@@ -9,7 +9,7 @@ pipeline {
         }
          stage('Ansible') {
              steps {
-                  ansiblePlaybook inventory: 'ansible/oracleRestore/inventory.ini', playbook: 'ansible/oracleRestore/restore.yaml', extraVars:["WORKSPACE":"${WORKSPACE}",]
+                  ansiblePlaybook inventory: 'ansible/oracleRestore/inventory.ini', playbook: 'ansible/oracleRestore/restore.yaml', extraVars:[WORKSPACE:"${WORKSPACE}",]
             }
         }
         
