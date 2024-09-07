@@ -24,4 +24,4 @@
       mode: '0700'
 
   - name: run
-    shell: "{{ remote_path }}/restoreDB.sh {{ oracle_sid }}"
+    shell: "{{ remote_path }}/restoreDB.sh"
