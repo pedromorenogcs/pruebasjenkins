@@ -28,5 +28,5 @@
     register: out
 
   - debug: 
-       var: out.stdout_lines
+     var: out.stdout
 
