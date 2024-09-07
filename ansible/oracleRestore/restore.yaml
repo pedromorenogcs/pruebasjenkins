@@ -2,7 +2,7 @@
 - name: Test restore oracle database.
   hosts: oracleservers
   vars_files:
-    - "{{ lookup('ansible.builtin.env', 'WORKSPACE') }}ansible/oracleRestore/external_vars.yaml"
+    - "{{ WORKSPACE }}ansible/oracleRestore/external_vars.yaml"
   remote_user: oracle
 
   tasks:
