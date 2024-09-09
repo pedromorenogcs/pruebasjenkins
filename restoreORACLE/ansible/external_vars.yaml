@@ -1,3 +1,3 @@
-remote_path: /home/vagrant/restore_scripts
-dest_path: /home/vagrant/restore_scripts
+remote_path: /home/oracle/restore_scripts
+dest_path: /home/oracle/restore_scripts
 oracle_sid: "{{ ORACLESID }}"
