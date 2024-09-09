@@ -4,9 +4,8 @@
   vars_files:
     - "{{ WORKSPACE }}/restoreORACLE/ansible/external_vars.yaml"
   remote_user: oracle  
-  become_user: oracle
   vars:
-    ansible_become_password: oracle123
+    ansible_su_password: oracle123
 
   tasks:
 
