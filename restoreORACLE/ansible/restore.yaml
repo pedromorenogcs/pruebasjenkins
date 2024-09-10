@@ -6,7 +6,7 @@
   remote_user: oracle  
   vars:
     ansible_sudo_password: oracle123
-    ansible_password: {{ oraclepass }}
+    ansible_password: "{{ oraclepass }}"
 
   tasks:
 
