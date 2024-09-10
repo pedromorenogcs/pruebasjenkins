@@ -14,7 +14,7 @@ pipeline {
          stage('Ansible') {
              steps {
                   ansiblePlaybook (
-		     vaultCredentialsId: 'AnsibleVault@i/var/lib/jenkins/credentials.xml',
+		     vaultCredentialsId: 'AnsibleVault@/var/lib/jenkins/credentials.xml',
                      inventory: 'restoreORACLE/ansible/inventory.ini', 
                      playbook: 'restoreORACLE/ansible/restore.yaml', 
                      extras:"-e WORKSPACE=${WORKSPACE} -e ORACLESID=$params.ORACLESID -e '@/var/lib/jenkins/ansible.yaml'")
