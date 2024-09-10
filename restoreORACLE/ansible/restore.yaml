@@ -10,6 +10,8 @@
 
   tasks:
 
+  - debug: msg="{{ lookup('env','BUILD_TAG') }}"
+
   - name: Basic usage
     ansible.builtin.debug:
       msg: "'{{ WORKSPACE }}' WORKSPACE env "
