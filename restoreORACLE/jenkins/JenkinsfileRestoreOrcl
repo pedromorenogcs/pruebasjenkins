@@ -13,11 +13,12 @@ pipeline {
         }
          stage('Ansible') {
              steps {
-                  ansiblePlaybook (
-		     vaultCredentialsId: '@/var/lib/jenkins/ansible.key',
-                     inventory: 'restoreORACLE/ansible/inventory.ini', 
-                     playbook: 'restoreORACLE/ansible/restore.yaml', 
-                     extras:"-e WORKSPACE=${WORKSPACE} -e ORACLESID=$params.ORACLESID -e '@/var/lib/jenkins/ansible.yaml'")
+#                  ansiblePlaybook (
+#		     vaultCredentialsId: '@/var/lib/jenkins/ansible.key',
+#                     inventory: 'restoreORACLE/ansible/inventory.ini', 
+#                     playbook: 'restoreORACLE/ansible/restore.yaml', 
+#                     extras:"-e WORKSPACE=${WORKSPACE} -e ORACLESID=$params.ORACLESID -e '@/var/lib/jenkins/ansible.yaml'")
+		  sh "/usr/local/bin/ansible-playbook -i kite_ansible_hosts restoreORACLE/ansible/restore.yaml --extra-vars 'ORACLESID=${params.ORACLESID} WORKSPACE=${WORKSPACE}' -e '@/var/lib/jenkins/ansible.yaml' --vault-id ansible_sudo_pass@/var/lib/jenkins/ansible.key "
              }
          }
     }
