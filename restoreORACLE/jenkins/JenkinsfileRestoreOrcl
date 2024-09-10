@@ -17,7 +17,7 @@ pipeline {
                      inventory: 'restoreORACLE/ansible/inventory.ini', 
                      playbook: 'restoreORACLE/ansible/restore.yaml', 
                      extras:"-e WORKSPACE=${WORKSPACE} -e ORACLESID=$params.ORACLESID -e '@/var/lib/jenkins/ansible.yaml'",
-		     vaultCredentialsId: 'ansible_sudo_pass@/var/lib/jenkins/ansible.key'}
+		     vaultCredentialsId: 'ansible_sudo_pass@/var/lib/jenkins/ansible.key')}
             }
         }
         
