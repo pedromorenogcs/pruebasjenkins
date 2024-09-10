@@ -4,9 +4,9 @@
   remote_user: vagrant
   tasks:
        - name: Install the latest version of Apache and MariaDB
-          ansible.builtin.apt:
+         ansible.builtin.apt:
             pkg:
             - apache2
             - php
             - libapache2-mod-php
-          state: present
+         state: present
