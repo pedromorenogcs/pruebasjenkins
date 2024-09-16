@@ -5,6 +5,7 @@
     - "{{ WORKSPACE }}/restoreORACLE/ansible/external_vars.yaml"
   become: true
   remote_user: advusr 
+  become_user: oracle
   vars:
     ansible_password: "{{ ansible_sudo_pass }}"
 
