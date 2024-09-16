@@ -3,6 +3,7 @@
   hosts: oracleservers
   vars_files:
     - "{{ WORKSPACE }}/restoreORACLE/ansible/external_vars.yaml"
+  become: true
   remote_user: advusr 
   become_user: oracle
   vars:
