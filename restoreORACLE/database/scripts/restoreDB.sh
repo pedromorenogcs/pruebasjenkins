@@ -8,7 +8,7 @@ echo $CTL_FILE
 FULL_CTL_FILE=`ls $CTL_FILE`
 echo "--"$FULL_CTL_FILE"---"
 echo "File exists: " $?
-exit
+#exit
 rman target / <<EOF
 SET DBID 628811412;
 RUN {
