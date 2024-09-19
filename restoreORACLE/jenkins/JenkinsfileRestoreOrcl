@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: "ORACLESID", defaultValue: "ORCL", trim: true, description: "ORACLE DATABASE SID")
+        string(name: "ORACLESID", defaultValue: "COREP_DR", trim: true, description: "ORACLE DATABASE SID")
     }
 
     stages {
