@@ -14,7 +14,10 @@ echo "File exists: " $?
 rman target / <<EOF
 SET DBID 628811412;
 RUN {
-startup force nomount PFILE=/home/oracle/initCOREP_DR.ora
+shutdown abort
+startup nomount PFILE='/home/oracle/initCOREP_DR.ora'
+ALLOCATE CHANNEL ch1 DEVICE TYPE DISK;
+ALLOCATE CHANNEL ch2 DEVICE TYPE DISK;
 RESTORE CONTROLFILE FROM  '${FULL_CTL_FILE}';
 alter database mount;
 restore datafile 1 preview;
