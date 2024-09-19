@@ -23,3 +23,4 @@ alter database mount;
 restore datafile 1 preview;
 }
 EOF
+tail -10 /tmp/verlog.log
