@@ -1,2 +1,17 @@
-ORACLE_SID={{oracle_sid}}
-echo "Restoring database $ORACLE_SID..." 
+export ORACLE_SID={{oracle_sid}}
+export ORACLE_SID=COREP_DR
+echo $ORACLE_SID
+datef=`date '+%d%m%y'`
+BASE_PATH=/backups/RMAN/COREP_??
+export CTL_FILE=${BASE_PATH}/${datef}???????-?????????-????????-??
+echo $CTL_FILE
+FULL_CTL_FILE=`ls $CTL_FILE`
+echo "--"$FULL_CTL_FILE"---"
+echo "File exists: " $?
+exit
+rman target / <<EOF
+SET DBID 628811412;
+RUN {
+RESTORE CONTROLFILE FROM  '${FULL_CTL_FILE}';
+}
+EOF
