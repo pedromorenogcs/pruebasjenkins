@@ -27,7 +27,7 @@ ALLOCATE CHANNEL ch8 DEVICE TYPE DISK;
 RESTORE CONTROLFILE FROM  '${FULL_CTL_FILE}';
 alter database mount;
 crosscheck archivelog all;
-delete expired archivelog all noprompt;
+delete noprompt expired archivelog all;
 }
 EOF
 tail -10 /tmp/verlog.log
