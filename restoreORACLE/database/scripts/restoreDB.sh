@@ -28,6 +28,10 @@ RESTORE CONTROLFILE FROM  '${FULL_CTL_FILE}';
 alter database mount;
 crosscheck archivelog all;
 delete noprompt expired archivelog all;
+SET NEWNAME FOR DATABASE TO '+DATA/COREP_DR/DATAFILE/%b';
+restore database;
+switch datafile all;
+recover database;
 }
 EOF
 tail -10 /tmp/verlog.log
