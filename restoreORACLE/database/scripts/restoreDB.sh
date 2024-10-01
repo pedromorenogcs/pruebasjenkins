@@ -18,9 +18,27 @@ startup nomount PFILE='/home/oracle/initCOREP_DR.ora';
 SET DBID 628811412;
 ALLOCATE CHANNEL ch1 DEVICE TYPE DISK;
 ALLOCATE CHANNEL ch2 DEVICE TYPE DISK;
+ALLOCATE CHANNEL ch3 DEVICE TYPE DISK;
+ALLOCATE CHANNEL ch4 DEVICE TYPE DISK;
+ALLOCATE CHANNEL ch5 DEVICE TYPE DISK;
+ALLOCATE CHANNEL ch6 DEVICE TYPE DISK;
+ALLOCATE CHANNEL ch7 DEVICE TYPE DISK;
+ALLOCATE CHANNEL ch8 DEVICE TYPE DISK;
 RESTORE CONTROLFILE FROM  '${FULL_CTL_FILE}';
 alter database mount;
 restore datafile 1 preview;
 }
 EOF
 tail -10 /tmp/verlog.log
+
+sqlplus -s /nolog > /tmp/renameredo.log<<EOF
+connect /as sysdba
+set lines 300
+set pages 300
+set heading off
+set verify off
+spool /tmp/renameRedo.sql
+select 'alter database rename file '''||MEMBER||''' to ''+RECO/COREP_DR' || SUBSTR(MEMBER,instr(MEMBER,'/',1,2)) || ''';' from v\$logfile;
+spool off
+@/tmp/renameRedo.sql
+EOF
