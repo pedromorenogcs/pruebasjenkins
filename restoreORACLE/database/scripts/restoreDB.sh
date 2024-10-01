@@ -26,7 +26,6 @@ ALLOCATE CHANNEL ch7 DEVICE TYPE DISK;
 ALLOCATE CHANNEL ch8 DEVICE TYPE DISK;
 RESTORE CONTROLFILE FROM  '${FULL_CTL_FILE}';
 alter database mount;
-restore datafile 1 preview;
 }
 EOF
 tail -10 /tmp/verlog.log
@@ -38,7 +37,9 @@ set pages 300
 set heading off
 set verify off
 spool /tmp/renameRedo.sql
+select 'alter database clear logfile group '||GROUP#||';' from v\$log;
 select 'alter database rename file '''||MEMBER||''' to ''+RECO/COREP_DR' || SUBSTR(MEMBER,instr(MEMBER,'/',1,2)) || ''';' from v\$logfile;
 spool off
 @/tmp/renameRedo.sql
+
 EOF
