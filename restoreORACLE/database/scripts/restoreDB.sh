@@ -39,8 +39,8 @@ set pages 300
 set heading off
 set verify off
 spool /tmp/renameRedo.sql
---select 'alter database clear logfile group '||GROUP#||';' from v\$logfile;
 select 'alter database rename file '''||MEMBER||''' to ''+RECO/COREP_DR' || SUBSTR(MEMBER,instr(MEMBER,'/',1,2)) || ''';' from v\$logfile;
+select 'alter database clear logfile group '||GROUP#||';' from v\$logfile;
 spool off
 @/tmp/renameRedo.sql
 
