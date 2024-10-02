@@ -47,5 +47,5 @@ select 'alter database rename file '''||MEMBER||''' to ''+RECO/COREP_DR' || SUBS
 select 'alter database clear logfile group '||GROUP#||';' from v\$logfile;
 spool off
 @/tmp/renameRedo.sql
-
+exit
 EOF
