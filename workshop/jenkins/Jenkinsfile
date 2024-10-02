@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    parameters {
-        string(name: "ORACLESID", defaultValue: "COREP_DR", trim: true, description: "ORACLE DATABASE SID")
-    }
-
     stages {
         stage('Checkout') {
             steps {
