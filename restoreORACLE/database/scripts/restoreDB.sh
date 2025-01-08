@@ -61,4 +61,4 @@ select database_name, open_mode, RESETLOGS_TIME from v$database;
 spool off
 exit
 EOF
-cat /tmp/evicende.txt
+cat /tmp/verlog.log |grep "Finished restore" |tail -1
