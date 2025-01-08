@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x
 ### CHECK ORACLE_SID as PARAMETER ###
-if [ ! -z "$1" ]
+if [ -z "$1" ]
   then
     echo "execute: ./Backup_Full.sh [ORACLE_SID]"
     exit 1
@@ -57,8 +57,6 @@ EOF
 tail -10 /tmp/verlog.log
 
 sqlplus -s /nolog > /tmp/renameredo.log<<EOF
-whenever oserror exit oscode
-whenever sqlerror exit sql.sqlcode
 connect /as sysdba
 set lines 300
 set pages 300
@@ -105,7 +103,7 @@ then
     startup
     spool off
     exit
-    EOF
+EOF
     fn_err $?
 ### ELSE, IS A PRIMARY ROLE DATABASE ###
 elif [ "$DATABASE_ROLE" == "PRIMARY" ]
@@ -121,7 +119,7 @@ elif [ "$DATABASE_ROLE" == "PRIMARY" ]
     spool /tmp/opendatabase.log
     alter database open resetlogs;
     spool off
-    EOF
+EOF
     fn_err $?
 fi
 ### EVIDENCE ###
