@@ -44,6 +44,7 @@ set heading off
 set verify off
 spool /tmp/renameRedo.sql
 select 'alter database rename file '''||MEMBER||''' to ''+RECO/COREP_DR' || SUBSTR(MEMBER,instr(MEMBER,'/',1,2)) || ''';' from v\$logfile;
+select 'alter database drop standby logfile group '||group#||';' from v\$logfile where TYPE='STANDBY';
 select 'alter database clear logfile group '||GROUP#||';' from v\$logfile;
 spool off
 @/tmp/renameRedo.sql
