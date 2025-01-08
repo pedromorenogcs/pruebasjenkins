@@ -43,11 +43,21 @@ set lines 300
 set pages 300
 set heading off
 set verify off
+col DATABASE_NAME format a40
+alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
 spool /tmp/renameRedo.sql
 select 'alter database rename file '''||MEMBER||''' to ''+RECO/${ORACLE_SID}' || SUBSTR(MEMBER,instr(MEMBER,'/',1,2)) || ''';' from v\$logfile;
 select 'alter database drop standby logfile group '||group#||';' from v\$logfile where TYPE='STANDBY';
 select 'alter database clear logfile group '||GROUP#||';' from v\$logfile;
 spool off
 @/tmp/renameRedo.sql
+spool /tmp/openresetlogs.log
+alter database open resetlogs;
+spool off
+spool /tmp/evicende.txt
+select open_mode from v$database;
+select database_name, open_mode, RESETLOGS_TIME from v$database;
+spool off
 exit
 EOF
+cat /tmp/evicende.txt
