@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 ### CHECK ORACLE_SID as PARAMETER ###
 if [ ! -z "$1" ]
   then
@@ -33,7 +34,6 @@ esac
 ###### END FUNCTION CHECK RETURN CODE ######
 rman target / LOG=/tmp/verlog.log <<EOF
 RUN {
-shutdown abort;
 startup nomount PFILE='/home/oracle/init${ORACLE_SID}.ora';
 SET DBID 628811412;
 ALLOCATE CHANNEL ch1 DEVICE TYPE DISK;
