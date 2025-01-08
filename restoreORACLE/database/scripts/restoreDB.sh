@@ -1,6 +1,6 @@
 #!/bin/bash
 ### CHECK ORACLE_SID as PARAMETER ###
-if [ -z "$1" ]
+if [ ! -z "$1" ]
   then
     echo "execute: ./Backup_Full.sh [ORACLE_SID]"
     exit 1
