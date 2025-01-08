@@ -15,7 +15,7 @@ datef=`date '+%d%m%y'`
 BASE_PATH=/backups/RMAN/COREP_??
 export CTL_FILE=${BASE_PATH}/${datef}???????-?????????-????????-??
 echo $CTL_FILE
-FULL_CTL_FILE=`ls $CTL_FILE`
+FULL_CTL_FILE=`ls $CTL_FILE |tail -1`
 echo "--"$FULL_CTL_FILE"---"
 echo "File exists: " $?
 #exit
