@@ -100,7 +100,7 @@ then
     spool /tmp/opendatabase.log
     alter database activate standby database;
     shutdown immediate;
-    startup
+    startup;
     spool off
     exit
 EOF
@@ -134,7 +134,7 @@ set verify off
 col DATABASE_NAME format a40
 alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
 spool /tmp/evicende.txt
-select database_name, open_mode, RESETLOGS_TIME from v\\$database;
+select database_name, open_mode, RESETLOGS_TIME from v\$database;
 spool off
 exit
 EOF
