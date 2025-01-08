@@ -2,7 +2,7 @@
 export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
 export PATH=$ORACLE_HOME/bin:$PATH
 export ORACLE_SID={{oracle_sid}}
-export ORACLE_SID=COREP_DR
+#export ORACLE_SID=COREP_DR
 echo $ORACLE_SID
 datef=`date '+%d%m%y'`
 BASE_PATH=/backups/RMAN/COREP_??
@@ -15,7 +15,7 @@ echo "File exists: " $?
 rman target / LOG=/tmp/verlog.log <<EOF
 RUN {
 shutdown abort;
-startup nomount PFILE='/home/oracle/initCOREP_DR.ora';
+startup nomount PFILE='/home/oracle/init${ORACLE_SID}.ora';
 SET DBID 628811412;
 ALLOCATE CHANNEL ch1 DEVICE TYPE DISK;
 ALLOCATE CHANNEL ch2 DEVICE TYPE DISK;
@@ -29,7 +29,7 @@ RESTORE CONTROLFILE FROM  '${FULL_CTL_FILE}';
 alter database mount;
 crosscheck archivelog all;
 delete noprompt expired archivelog all;
-SET NEWNAME FOR DATABASE TO '+DATA/COREP_DR/DATAFILE/%b';
+SET NEWNAME FOR DATABASE TO '+DATA/${ORACLE_SID}/DATAFILE/%b';
 restore database;
 switch datafile all;
 recover database;
@@ -44,7 +44,7 @@ set pages 300
 set heading off
 set verify off
 spool /tmp/renameRedo.sql
-select 'alter database rename file '''||MEMBER||''' to ''+RECO/COREP_DR' || SUBSTR(MEMBER,instr(MEMBER,'/',1,2)) || ''';' from v\$logfile;
+select 'alter database rename file '''||MEMBER||''' to ''+RECO/${ORACLE_SID}' || SUBSTR(MEMBER,instr(MEMBER,'/',1,2)) || ''';' from v\$logfile;
 select 'alter database drop standby logfile group '||group#||';' from v\$logfile where TYPE='STANDBY';
 select 'alter database clear logfile group '||GROUP#||';' from v\$logfile;
 spool off
