@@ -1,10 +1,15 @@
+#!/bin/bash
+### CHECK ORACLE_SID as PARAMETER ###
+if [ -z "$1" ]
+  then
+    echo "execute: ./Backup_Full.sh [ORACLE_SID]"
+    exit
+fi
 #export ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1
 export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
 export PATH=$ORACLE_HOME/bin:$PATH
 export NLS_DATE_FORMAT="dd-mm-yy hh24:mi:ss"
 export ORACLE_SID={{oracle_sid}}
-#export ORACLE_SID=COREP_DR
-echo $ORACLE_SID
 datef=`date '+%d%m%y'`
 BASE_PATH=/backups/RMAN/COREP_??
 export CTL_FILE=${BASE_PATH}/${datef}???????-?????????-????????-??
@@ -13,6 +18,19 @@ FULL_CTL_FILE=`ls $CTL_FILE`
 echo "--"$FULL_CTL_FILE"---"
 echo "File exists: " $?
 #exit
+###### FUNCTION RETURN CODE ######
+fn_err () {
+errcode=$1
+case $errcode in
+        0)
+                ;;
+        *)
+                echo "`date +%d%m%y%H%M%S`: ERROR, EXITING WITH ERROR CODE $errcode"
+                exit $errcode
+                ;;
+esac
+}
+###### END FUNCTION CHECK RETURN CODE ######
 rman target / LOG=/tmp/verlog.log <<EOF
 RUN {
 shutdown abort;
@@ -39,6 +57,8 @@ EOF
 tail -10 /tmp/verlog.log
 
 sqlplus -s /nolog > /tmp/renameredo.log<<EOF
+whenever oserror exit oscode
+whenever sqlerror exit sql.sqlcode
 connect /as sysdba
 set lines 300
 set pages 300
@@ -52,6 +72,7 @@ select 'alter database drop standby logfile group '||group#||';' from v\$logfile
 select 'alter database clear logfile group '||GROUP#||';' from v\$logfile;
 spool off
 @/tmp/renameRedo.sql
+EOF
 
 ###### CURRENT DBROLE ######
 DATABASE_ROLE=`sqlplus -s / "as sysdba" <<EOF
@@ -70,6 +91,8 @@ echo ${DATABASE_ROLE}
 if [ "$DATABASE_ROLE" == "PHYSICAL STANDBY" ]
 then
     sqlplus -s /nolog <<EOF
+    whenever oserror exit oscode
+    whenever sqlerror exit sql.sqlcode
     conn / as sysdba
     set lines 300
     set pages 300
@@ -83,9 +106,12 @@ then
     spool off
     exit
     EOF
+    fn_err $?
 ### ELSE, IS A PRIMARY ROLE DATABASE ###
 elif [ "$DATABASE_ROLE" == "PRIMARY" ]
     sqlplus -s /nolog <<EOF
+    whenever oserror exit oscode
+    whenever sqlerror exit sql.sqlcode
     conn / as sysdba
     set lines 300
     set pages 300
@@ -96,9 +122,12 @@ elif [ "$DATABASE_ROLE" == "PRIMARY" ]
     alter database open resetlogs;
     spool off
     EOF
+    fn_err $?
 fi
 ### EVIDENCE ###
 sqlplus -s /nolog >>/dev/null <<EOF
+whenever oserror exit oscode
+whenever sqlerror exit sql.sqlcode
 conn / as sysdba
 set lines 300
 set pages 300
@@ -111,6 +140,6 @@ select database_name, open_mode, RESETLOGS_TIME from v\\$database;
 spool off
 exit
 EOF
-
+fn_err $?
 cat /tmp/verlog.log |grep "Finished restore" |tail -1
 cat /tmp/evicende.txt
