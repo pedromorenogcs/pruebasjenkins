@@ -1,6 +1,7 @@
 #export ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1
 export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
 export PATH=$ORACLE_HOME/bin:$PATH
+export NLS_DATE_FORMAT="dd-mm-yy hh24:mi:ss"
 export ORACLE_SID={{oracle_sid}}
 #export ORACLE_SID=COREP_DR
 echo $ORACLE_SID
