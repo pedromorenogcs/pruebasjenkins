@@ -1,11 +1,4 @@
 #!/bin/bash
-set -x
-### CHECK ORACLE_SID as PARAMETER ###
-if [ -z "$1" ]
-  then
-    echo "execute: ./Backup_Full.sh [ORACLE_SID]"
-    exit 1
-fi
 #export ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1
 export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
 export PATH=$ORACLE_HOME/bin:$PATH
