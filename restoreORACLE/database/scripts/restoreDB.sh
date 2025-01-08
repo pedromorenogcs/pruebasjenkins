@@ -52,13 +52,65 @@ select 'alter database drop standby logfile group '||group#||';' from v\$logfile
 select 'alter database clear logfile group '||GROUP#||';' from v\$logfile;
 spool off
 @/tmp/renameRedo.sql
-spool /tmp/openresetlogs.log
-alter database open resetlogs;
-spool off
+
+###### CURRENT DBROLE ######
+DATABASE_ROLE=`sqlplus -s / "as sysdba" <<EOF
+whenever oserror exit oscode
+whenever sqlerror exit sql.sqlcode
+set pages 0
+set head off
+set feedback off
+select trim(database_role) from v\\$database;
+exit
+EOF`
+###### END CURRENT DBROLE ######
+echo ${DATABASE_ROLE}
+
+### IF CURRENT DBROLE IS NOT A PHYSICAL STANDBY###
+if [ "$DATABASE_ROLE" == "PHYSICAL STANDBY" ]
+then
+    sqlplus -s /nolog <<EOF
+    conn / as sysdba
+    set lines 300
+    set pages 300
+    set heading off
+    set verify off
+    alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
+    spool /tmp/opendatabase.log
+    alter database activate standby database;
+    shutdown immediate;
+    startup
+    spool off
+    exit
+    EOF
+### ELSE, IS A PRIMARY ROLE DATABASE ###
+elif [ "$DATABASE_ROLE" == "PRIMARY" ]
+    sqlplus -s /nolog <<EOF
+    conn / as sysdba
+    set lines 300
+    set pages 300
+    set heading off
+    set verify off
+    alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
+    spool /tmp/opendatabase.log
+    alter database open resetlogs;
+    spool off
+    EOF
+fi
+### EVIDENCE ###
+sqlplus -s /nolog >>/dev/null <<EOF
+conn / as sysdba
+set lines 300
+set pages 300
+set heading off
+set verify off
+col DATABASE_NAME format a40
+alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
 spool /tmp/evicende.txt
-select open_mode from v$database;
-select database_name, open_mode, RESETLOGS_TIME from v$database;
+select database_name, open_mode, RESETLOGS_TIME from v\\$database;
 spool off
 exit
 EOF
+
 cat /tmp/verlog.log |grep "Finished restore" |tail -1
+cat /tmp/evicende.txt
