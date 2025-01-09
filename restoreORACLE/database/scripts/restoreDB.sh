@@ -5,6 +5,19 @@ export PATH=$ORACLE_HOME/bin:$PATH
 export NLS_DATE_FORMAT="dd-mm-yy hh24:mi:ss"
 export ORACLE_SID={{oracle_sid}}
 datef=`date '+%d%m%y'`
+
+#### Logging function
+LOGFILE=/tmp/restoreDB.log
+MYPID=$$
+PROJECT=M2M
+PROJECTACTION=RESTOREDR
+LOGTITLE="$PROJECT $PROJECTACTION"
+function logging() {
+  #### LOGGING FORMAT: PROJECT PROJECTACTION EPOCH PID TEXT ####
+  echo $LOGTITLE $(date +%s) $MYPID $1 |tee -a $LOGFILE >>/dev/null
+}
+#### END Logging function
+
 BASE_PATH=/backups/RMAN/COREP_??
 export CTL_FILE=${BASE_PATH}/${datef}???????-?????????-????????-??
 echo $CTL_FILE
@@ -19,7 +32,7 @@ case $errcode in
         0)
                 ;;
         *)
-                echo "`date +%d%m%y%H%M%S`: ERROR, EXITING WITH ERROR CODE $errcode"
+                echo $LOGTITLE $(date +%s) $MYPID $1 |tee -a $LOGFILE >>/dev/null
                 exit $errcode
                 ;;
 esac
