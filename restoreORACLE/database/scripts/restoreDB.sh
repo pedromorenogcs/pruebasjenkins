@@ -100,6 +100,7 @@ EOF
     fn_err $?
 ### ELSE, IS A PRIMARY ROLE DATABASE ###
 elif [ "$DATABASE_ROLE" == "PRIMARY" ]
+then
     sqlplus -s /nolog <<EOF
     whenever oserror exit oscode
     whenever sqlerror exit sql.sqlcode
