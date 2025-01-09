@@ -41,7 +41,7 @@ RESTORE CONTROLFILE FROM  '${FULL_CTL_FILE}';
 alter database mount;
 crosscheck archivelog all;
 delete noprompt expired archivelog all;
-catalog start with '$BASE_PATH';
+catalog start with '$BASE_PATH' NOPROMPT;
 SET NEWNAME FOR DATABASE TO '+DATA/${ORACLE_SID}/DATAFILE/%b';
 restore database;
 switch datafile all;
