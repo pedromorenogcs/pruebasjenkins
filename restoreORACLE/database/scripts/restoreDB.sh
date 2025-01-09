@@ -6,17 +6,18 @@ export NLS_DATE_FORMAT="dd-mm-yy hh24:mi:ss"
 export ORACLE_SID={{oracle_sid}}
 datef=`date '+%d%m%y'`
 EVIDENCE_FILE=/tmp/evidence.txt
+
 #### Logging function
 LOGFILE=/tmp/restoreDB.log
 MYPID=$$
 PROJECT=M2M
 PROJECTACTION=RESTOREDR
 LOGTITLE="$PROJECT $PROJECTACTION"
-function logging() {
+function logging_fn() {
   #### LOGGING FORMAT: PROJECT PROJECTACTION EPOCH PID TEXT ####
   echo $LOGTITLE $(date +%s) $MYPID $1 |tee -a $LOGFILE >>/dev/null
 }
-#### END Logging function
+#### END logging function
 
 BASE_PATH=/backups/RMAN/COREP_??
 export CTL_FILE=${BASE_PATH}/${datef}???????-?????????-????????-??
@@ -145,5 +146,6 @@ spool off
 exit
 EOF
 fn_err $?
+logging_fn $(cat ${EVIDENCE_FILE})
 cat ${LOGFILE} |grep "Finished restore" |tail -1
 cat ${EVIDENCE_FILE}
