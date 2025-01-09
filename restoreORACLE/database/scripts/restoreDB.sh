@@ -4,6 +4,7 @@ export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
 export PATH=$ORACLE_HOME/bin:$PATH
 export NLS_DATE_FORMAT="dd-mm-yy hh24:mi:ss"
 export ORACLE_SID={{oracle_sid}}
+BASE_PATH=/backups/RMAN/COREP_??
 datef=`date '+%d%m%y'`
 EVIDENCE_FILE=/tmp/evidence.txt
 
@@ -19,7 +20,7 @@ function logging_fn() {
 }
 #### END logging function
 
-BASE_PATH=/backups/RMAN/COREP_??
+
 export CTL_FILE=${BASE_PATH}/${datef}???????-?????????-????????-??
 echo $CTL_FILE
 FULL_CTL_FILE=`ls $CTL_FILE |tail -1`
@@ -69,9 +70,11 @@ set lines 300
 set pages 300
 set heading off
 set verify off
+set feedback off
 col DATABASE_NAME format a40
 alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
 spool /tmp/renameRedo.sql
+create spfile from pfile='/home/oracle/init${ORACLE_SID}.ora';
 select 'alter database rename file '''||MEMBER||''' to ''+RECO/${ORACLE_SID}' || SUBSTR(MEMBER,instr(MEMBER,'/',1,2)) || ''';' from v\$logfile;
 select 'alter database drop standby logfile group '||group#||';' from v\$logfile where TYPE='STANDBY';
 select 'alter database clear logfile group '||GROUP#||';' from v\$logfile;
