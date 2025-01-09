@@ -106,7 +106,7 @@ then
     set heading off
     set verify off
     alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
-    spool ${LOGFILE}
+    spool ${LOGFILE} APPEND
     alter database activate standby database;
     shutdown immediate;
     startup;
@@ -126,7 +126,7 @@ then
     set heading off
     set verify off
     alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
-    spool ${LOGFILE}
+    spool ${LOGFILE} APPEND
     alter database open resetlogs;
     spool off
 EOF
