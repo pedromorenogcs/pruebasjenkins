@@ -5,7 +5,7 @@ export PATH=$ORACLE_HOME/bin:$PATH
 export NLS_DATE_FORMAT="dd-mm-yy hh24:mi:ss"
 export ORACLE_SID={{oracle_sid}}
 datef=`date '+%d%m%y'`
-
+EVIDENCE_FILE=/tmp/evidence.txt
 #### Logging function
 LOGFILE=/tmp/restoreDB.log
 MYPID=$$
@@ -32,13 +32,13 @@ case $errcode in
         0)
                 ;;
         *)
-                echo $LOGTITLE $(date +%s) $MYPID $1 |tee -a $LOGFILE >>/dev/null
+                echo $LOGTITLE $(date +%s) ERROR $MYPID ${errcode} |tee -a $LOGFILE >>/dev/null
                 exit $errcode
                 ;;
 esac
 }
 ###### END FUNCTION CHECK RETURN CODE ######
-rman target / LOG=/tmp/verlog.log <<EOF
+rman target / LOG=${LOGFILE} APPEND <<EOF
 RUN {
 startup nomount PFILE='/home/oracle/init${ORACLE_SID}.ora';
 SET DBID 628811412;
@@ -61,9 +61,8 @@ switch datafile all;
 recover database;
 }
 EOF
-tail -10 /tmp/verlog.log
 
-sqlplus -s /nolog > /tmp/renameredo.log<<EOF
+sqlplus -s /nolog >> ${LOGFILE} <<EOF
 connect /as sysdba
 set lines 300
 set pages 300
@@ -90,7 +89,6 @@ select trim(database_role) from v\\$database;
 exit
 EOF`
 ###### END CURRENT DBROLE ######
-echo ${DATABASE_ROLE}
 
 ### IF CURRENT DBROLE IS NOT A PHYSICAL STANDBY###
 if [ "$DATABASE_ROLE" == "PHYSICAL STANDBY" ]
@@ -104,7 +102,7 @@ then
     set heading off
     set verify off
     alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
-    spool /tmp/opendatabase.log
+    spool ${LOGFILE}
     alter database activate standby database;
     shutdown immediate;
     startup;
@@ -124,7 +122,7 @@ then
     set heading off
     set verify off
     alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
-    spool /tmp/opendatabase.log
+    spool ${LOGFILE}
     alter database open resetlogs;
     spool off
 EOF
@@ -141,11 +139,11 @@ set heading off
 set verify off
 col DATABASE_NAME format a40
 alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
-spool /tmp/evicende.txt
+spool ${EVIDENCE_FILE}
 select database_name, open_mode, RESETLOGS_TIME from v\$database;
 spool off
 exit
 EOF
 fn_err $?
-cat /tmp/verlog.log |grep "Finished restore" |tail -1
-cat /tmp/evicende.txt
+cat ${LOGFILE} |grep "Finished restore" |tail -1
+cat ${EVIDENCE_FILE}
