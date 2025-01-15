@@ -1,6 +1,6 @@
 #!/bin/bash
-#export ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1
-export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
+export ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1
+#export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
 export PATH=$ORACLE_HOME/bin:$PATH
 export NLS_DATE_FORMAT="dd-mm-yy hh24:mi:ss"
 export ORACLE_SID={{oracle_sid}}
@@ -73,8 +73,8 @@ set verify off
 set feedback off
 col DATABASE_NAME format a40
 alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
-spool /tmp/renameRedo.sql
 create spfile from pfile='/home/oracle/init${ORACLE_SID}.ora';
+spool /tmp/renameRedo.sql
 select 'alter database rename file '''||MEMBER||''' to ''+RECO/${ORACLE_SID}' || SUBSTR(MEMBER,instr(MEMBER,'/',1,2)) || ''';' from v\$logfile;
 select 'alter database drop standby logfile group '||group#||';' from v\$logfile where TYPE='STANDBY';
 select 'alter database clear logfile group '||GROUP#||';' from v\$logfile;
@@ -98,8 +98,6 @@ EOF`
 if [ "$DATABASE_ROLE" == "PHYSICAL STANDBY" ]
 then
     sqlplus -s /nolog <<EOF
-    whenever oserror exit oscode
-    whenever sqlerror exit sql.sqlcode
     conn / as sysdba
     set lines 300
     set pages 300

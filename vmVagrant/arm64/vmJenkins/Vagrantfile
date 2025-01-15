@@ -82,6 +82,10 @@ sudo apt install -y ansible
 sudo rm -rf /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
 sudo -u jenkins ssh-keygen -q -t rsa -N '' -f /var/lib/jenkins/.ssh/id_rsa <<<y >/dev/null 2>&1
 sudo systemctl restart ssh
+sudo -u vagrant wget https://github.com/prometheus/prometheus/releases/download/v3.1.0/prometheus-3.1.0.darwin-arm64.tar.gz
+sudo -u vagrant tar xvfx prometheus-3.1.0.darwin-arm64.tar.gz 
+sudo -u vagrant cd prometheus-3.1.0.darwin-arm64/
+sudo nohup ./prometheus &
 sudo echo "JenkinsPass:";sudo cat /var/lib/jenkins/secrets/initialAdminPassword
    SHELL
 end
