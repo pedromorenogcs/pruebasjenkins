@@ -56,7 +56,7 @@ RESTORE CONTROLFILE FROM  '${FULL_CTL_FILE}';
 alter database mount;
 crosscheck archivelog all;
 --delete noprompt expired archivelog all;
---catalog start with '/backups/RMAN/' NOPROMPT;
+catalog start with '/backups/RMAN/' NOPROMPT;
 --SET NEWNAME FOR DATABASE TO '+DATA/${ORACLE_SID}/DATAFILE/%b';
 restore database VALIDATE;
 --switch datafile all;
