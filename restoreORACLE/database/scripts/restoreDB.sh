@@ -60,3 +60,4 @@ SET NEWNAME FOR DATABASE TO '+DATA/${ORACLE_SID}/DATAFILE/%b';
 restore database VALIDATE;
 }
 EOF
+tail -100 /tmp/restoreDB.log
