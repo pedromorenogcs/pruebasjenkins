@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch:'main', url: 'https://github.com/pedromorenogcs/pruebasjenkins.git'
+                git branch:'restorevalidate', url: 'https://github.com/pedromorenogcs/pruebasjenkins.git'
             }
         }
          stage('Ansible') {
