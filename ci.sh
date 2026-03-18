@@ -1,5 +1,5 @@
 #!/bin/bash
-git pull
+GIT_SSH_COMMAND='ssh -i $HOME/.ssh/pruebasM2MGitHub -o IdentitiesOnly=yes' git pull
 git add .
 git commit -m "commit"
 GIT_SSH_COMMAND='ssh -i $HOME/.ssh/pruebasM2MGitHub -o IdentitiesOnly=yes' git push
