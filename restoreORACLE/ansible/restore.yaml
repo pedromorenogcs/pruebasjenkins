@@ -29,8 +29,10 @@
       dest: "{{ remote_path }}"
       mode: '0700'
 
-  - name: run
+  - name: run restoreDB.sh, async wait for up to 3hrs and ask every 60 sec
     shell: "{{ remote_path }}/restoreDB.sh"
+    async: 10800
+    pull: 60
     register: out
 
   - debug: 
