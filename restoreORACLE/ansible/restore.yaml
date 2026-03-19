@@ -31,9 +31,9 @@
 
   - name: run restoreDB.sh, async wait for up to 3hrs and ask every 60 sec
     ansible.builtin.command: "{{ remote_path }}/restoreDB.sh"
-    async: 10800
-    pull: 60
-    register: out
+      async: 10800
+      pull: 60
+      register: out
 
   - debug: 
      var: out.stdout_lines
