@@ -1,6 +1,6 @@
 #!/bin/bash
-#export ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1
-export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
+export ORACLE_HOME=/u01/app/oracle/product/19.0.0/dbhome_1
+#export ORACLE_HOME=/u01/app/oracle/product/19.3.0/dbhome_1
 export PATH=$ORACLE_HOME/bin:$PATH
 export NLS_DATE_FORMAT="dd-mm-yy hh24:mi:ss"
 export ORACLE_SID={{oracle_sid}}
@@ -62,6 +62,7 @@ restore database;
 switch datafile all;
 recover database;
 }
+exit;
 EOF
 
 sqlplus -s /nolog >> ${LOGFILE} <<EOF
@@ -105,6 +106,7 @@ then
     set verify off
     alter session set nls_date_format='dd-yy-mm hh24:mi:ss';
     spool ${LOGFILE} APPEND
+    alter database flashback off;
     alter database activate standby database;
     shutdown immediate;
     startup;

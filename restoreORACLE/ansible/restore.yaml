@@ -31,6 +31,8 @@
 
   - name: run
     shell: "{{ remote_path }}/restoreDB.sh"
+    async: 14400
+    poll: 120
     register: out
 
   - debug: 
