@@ -6,6 +6,7 @@ export NLS_DATE_FORMAT="dd-mm-yy hh24:mi:ss"
 export ORACLE_SID={{oracle_sid}}
 BASE_PATH=/backups/RMAN/COREP_??
 datef=`date '+%d%m%y'`
+FIRST_ARCH="`date '+%Y-%m-%d'` 00:00:00"
 EVIDENCE_FILE=/tmp/evidence.txt
 
 #### Logging function
@@ -58,6 +59,7 @@ crosscheck archivelog all;
 delete noprompt expired archivelog all;
 catalog start with '/backups/RMAN/' NOPROMPT;
 SET NEWNAME FOR DATABASE TO '+DATA/${ORACLE_SID}/DATAFILE/%b';
+restore archivelog from time "to_date('$FIRST_ARCH','yyyy-mm-dd hh24:mi:ss')";
 restore database;
 switch datafile all;
 recover database;
