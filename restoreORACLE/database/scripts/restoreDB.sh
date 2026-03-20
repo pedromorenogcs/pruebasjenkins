@@ -59,6 +59,6 @@ catalog start with '/backups/RMAN/' NOPROMPT;
 SET NEWNAME FOR DATABASE TO '+DATA/${ORACLE_SID}/DATAFILE/%b';
 restore database VALIDATE;
 }
-exit
+exit;
 EOF
 tail -100 /tmp/restoreDB.log
