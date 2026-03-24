@@ -62,7 +62,7 @@ SET NEWNAME FOR DATABASE TO '+DATA/${ORACLE_SID}/DATAFILE/%b';
 restore archivelog from time "to_date('$FIRST_ARCH','yyyy-mm-dd hh24:mi:ss')";
 restore database;
 switch datafile all;
-recover database;
+recover database noredo;
 }
 exit;
 EOF
